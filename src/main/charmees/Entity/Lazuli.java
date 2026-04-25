@@ -1,12 +1,22 @@
-package charmees.finalproj.entities;
 
-public class Lazuli extends GameCharacter {
-    public Lazuli() {
-        super("Lazuli", "Healer", "Ranged", "Staff", 150, 30);
-    }   
-    
+public class Lazuli extends Character {
+
+    public Lazuli(String name, String charClass, String type, String weapon, int healthPoints, int manaPoints) {
+        super(name, charClass, type, weapon, healthPoints, manaPoints);
+    }
+
     @Override
-    public void performSkill(int skill, MobNPC target, GameCharacter ally, GameCharacter[] party) {
+    public void useSkill(int skill, MobNPC target, Character ally, Character[] party) {
+        // if this character is stunned, they cannot use skills
+        if (this.isStunned()) {
+            System.out.println(this.getName() + " is stunned and cannot use skills.");
+            return;
+        }
+        lazuliSkills(skill, ally, party);
+    }
+
+    // ----------------- Lazuli's Skills -----------------
+    private void lazuliSkills(int skill, Character ally, Character[] party) {
         int heal = 0;
         switch (skill) {
             case 1: // Basic Heal
@@ -23,7 +33,7 @@ public class Lazuli extends GameCharacter {
                 if (manaPoints >= 20) {
                     manaPoints -= 20;
                     // heal and restore MP to all allies
-                    for (GameCharacter c : party) {
+                    for (Character c : party) {
                         if (c != null && c.isAlive()) {
                             int h = Math.max(10, c.healthPoints / 7); // ~15% of current
                             c.healAlly(h);
@@ -35,7 +45,7 @@ public class Lazuli extends GameCharacter {
                 break;
             case 3: // Harmonic Wave
                 if (manaPoints == 0) {
-                    for (GameCharacter c : party) {
+                    for (Character c : party) {
                         if (c != null && c.isAlive()) {
                             int h = Math.max(20, c.healthPoints / 2);
                             c.healAlly(h);
@@ -45,24 +55,21 @@ public class Lazuli extends GameCharacter {
                     System.out.println(name + " used Ultimate, Harmonic Wave! Restores large MP and HP to all allies.");
                 } else System.out.println(name + " must have 0 mana to use Harmonic Wave!");
                 break;
+            }
         }
-    }
 
     @Override
     public String[] getSkillList() {
-        return new String[] {
-            "Skill: Basic Heal (Cost: 10 MP) \n\n- Heals an ally for ~25% of their current HP and restores 10 MP.",
-            "Skill: Ocean's Blessing (Cost: 20 MP) \n\n- Heals all allies for ~15% of their current HP and restores 10 MP each.",
-            "Ultimate Skill: Harmonic Wave (Cost: 0 MP, Must have 0 MP) \n\n- Heals all allies for ~50% of their current HP and restores 100 MP each."
-        };
+        return new String[]{"1) Basic Heal - Cost: 10 MP","2) Ocean's Blessing - Cost: 20 MP","3) Harmonic Wave - Requires 0 MP"};
     }
 
     @Override
     public String getSkillTargetType(int skill) {
-        if(skill == 1) {
-            return "ALLY";
-        } else {
-            return "ALL";
+        switch (skill) {
+            case 1: return "ALLY"; // Basic Heal
+            case 2: return "ALL";  // Ocean's Blessing
+            case 3: return "ALL";  // Harmonic Wave
+            default: return "ALLY";
         }
     }
 }
