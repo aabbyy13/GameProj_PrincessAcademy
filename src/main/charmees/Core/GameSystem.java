@@ -1,4 +1,8 @@
 
+package src.main.charmees.core;
+
+import src.main.charmees.gui.MainMenu;
+
 public class GameSystem {
     protected MainMenu mainMenu;
 
