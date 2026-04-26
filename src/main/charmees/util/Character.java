@@ -1,6 +1,6 @@
-
+package charmees.util;
 public abstract class Character extends Entity implements Healable {
-    int manaPoints;
+    public int manaPoints;
 
     public Character(String name, String charClass, String type, String weapon, int healthPoints, int manaPoints) {
         super(name, charClass, type, weapon, healthPoints);
