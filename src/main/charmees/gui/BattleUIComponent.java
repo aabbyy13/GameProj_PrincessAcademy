@@ -1,4 +1,8 @@
 // Abstract base class for battle UI components
+package charmees.gui;
+
+import charmees.util.*;
+import charmees.util.Character;
 import java.util.Scanner;
 
 public abstract class BattleUIComponent {
