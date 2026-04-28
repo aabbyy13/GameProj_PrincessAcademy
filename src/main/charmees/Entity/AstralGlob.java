@@ -1,3 +1,6 @@
+package src.main.charmees.Entity;
+import src.main.charmees.util.MobNPC;
+import src.main.charmees.util.Character;
 
 public class AstralGlob extends MobNPC {
 
