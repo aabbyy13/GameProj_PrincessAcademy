@@ -1,5 +1,6 @@
+package charmees.util;
 public class MobNPC extends Entity {
-    int chapter;
+    public int chapter;
 
     public MobNPC(String name, String charClass, String type, String weapon, int healthPoints, int chapter) {
         super(name, charClass, type, weapon, healthPoints);
