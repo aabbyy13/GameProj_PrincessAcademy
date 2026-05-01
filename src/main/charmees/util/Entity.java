@@ -1,15 +1,16 @@
+package charmees.util;
 public abstract class Entity implements StatusEffectable {
-    String name;
-    String charClass;
-    String type;
-    String weapon;
-    int healthPoints;
+    public String name;
+    public String charClass;
+    public String type;
+    public String weapon;
+    public int healthPoints;
 
     // status effect counters
-    int tauntTurns = 0;
-    int damageReductionTurns = 0;
-    double damageReductionPercent = 0.0;
-    int stunnedTurns = 0;
+    public int tauntTurns = 0;
+    public int damageReductionTurns = 0;
+    public double damageReductionPercent = 0.0;
+    public int stunnedTurns = 0;
 
     public Entity(String name, String charClass, String type, String weapon, int healthPoints) {
         this.name = name;

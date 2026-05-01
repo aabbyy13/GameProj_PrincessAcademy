@@ -1,6 +1,13 @@
 // Class for handling battle phases (enemy and character turns)
+package charmees.gui;
+
+import charmees.util.*;
+import charmees.util.Character;
 import java.util.ArrayList;
 import java.util.Scanner;
+import src.main.charmees.util.*;
+import src.main.charmees.gui.*;
+import src.main.charmees.util.Character;
 
 public class BattlePhases extends BattleUIComponent {
 
@@ -13,17 +20,22 @@ public class BattlePhases extends BattleUIComponent {
         // Not used, as phases are called separately
     }
 
-    // enemies attack: each alive enemy in the active chapter uses a random skill on a random alive character
+    // enemies attack: each alive enemy in the active chapter uses a random skill on
+    // a random alive character
     public void enemyPhase() {
-          ArrayList<Integer> aliveCharacterIndexes = new ArrayList<>();
+        ArrayList<Integer> aliveCharacterIndexes = new ArrayList<>();
         for (int i = 0; i < characters.length; i++) {
-            if (characters[i].isAlive()) aliveCharacterIndexes.add(i);
+            if (characters[i].isAlive())
+                aliveCharacterIndexes.add(i);
         }
-        if (aliveCharacterIndexes.isEmpty()) return; // no targets
+        if (aliveCharacterIndexes.isEmpty())
+            return; // no targets
 
         for (MobNPC enemy : mobs) {
-            if (enemy.chapter != this.currentChapter) continue;
-            if (!enemy.isAlive()) continue;
+            if (enemy.chapter != this.currentChapter)
+                continue;
+            if (!enemy.isAlive())
+                continue;
 
             // if monster is stunned, they skip their action
             if (enemy.isStunned()) {
@@ -34,7 +46,8 @@ public class BattlePhases extends BattleUIComponent {
             // prefer taunted party members if any
             ArrayList<Integer> tauntedTargets = new ArrayList<>();
             for (int i = 0; i < characters.length; i++) {
-                if (characters[i].isAlive() && characters[i].tauntTurns > 0) tauntedTargets.add(i);
+                if (characters[i].isAlive() && characters[i].tauntTurns > 0)
+                    tauntedTargets.add(i);
             }
 
             int randIndex = -1;
@@ -53,10 +66,12 @@ public class BattlePhases extends BattleUIComponent {
             System.out.println();
             // handle lava beast AoE case explicitly
             if (enemy.getName().equalsIgnoreCase("lava beast") && skill == 3) {
-                int damage = (int)(Math.random() * 31) + 20;
-                System.out.println(enemy.getName() + " used Corrupted Eruption! Deals " + damage + " damage to all party members!");
+                int damage = (int) (Math.random() * 31) + 20;
+                System.out.println(enemy.getName() + " used Corrupted Eruption! Deals " + damage
+                        + " damage to all party members!");
                 for (Character c : characters) {
-                    if (c.isAlive()) c.takedamage(damage);
+                    if (c.isAlive())
+                        c.takedamage(damage);
                 }
             } else {
                 enemy.useSkill(skill, target);
@@ -67,14 +82,16 @@ public class BattlePhases extends BattleUIComponent {
                 // rebuild aliveCharacterIndexes to avoid duplicates and removed dead targets
                 aliveCharacterIndexes.clear();
                 for (int i = 0; i < characters.length; i++) {
-                    if (characters[i].isAlive()) aliveCharacterIndexes.add(i);
+                    if (characters[i].isAlive())
+                        aliveCharacterIndexes.add(i);
                 }
-                if (aliveCharacterIndexes.isEmpty()) return; // all characters dead
+                if (aliveCharacterIndexes.isEmpty())
+                    return; // all characters dead
             }
         }
     }
 
-    //character attack: character attacks via user input and heals  via user input
+    // character attack: character attacks via user input and heals via user input
     public void characterPhase() {
         ArrayList<Integer> aliveEnemyIndexes = new ArrayList<>();
         // collect indices of mobs that belong to the current chapter and are alive
@@ -83,10 +100,12 @@ public class BattlePhases extends BattleUIComponent {
                 aliveEnemyIndexes.add(i);
             }
         }
-        if (aliveEnemyIndexes.isEmpty()) return; // no targets
+        if (aliveEnemyIndexes.isEmpty())
+            return; // no targets
 
         for (Character party : characters) {
-            if (!party.isAlive()) continue;
+            if (!party.isAlive())
+                continue;
             // if the character is stunned, they skip their action this turn
             if (party.isStunned()) {
                 System.out.println(party.getName() + " is stunned and cannot act this turn.");
@@ -94,7 +113,7 @@ public class BattlePhases extends BattleUIComponent {
             }
             // if the character is stunned, they skip their action this turn
 
-            //displayss character info
+            // displayss character info
             System.out.println("\n" + party.name + " | HP: " + party.healthPoints + " | MP: " + party.manaPoints);
             System.out.println("===============================");
 
@@ -103,11 +122,13 @@ public class BattlePhases extends BattleUIComponent {
             int skill = -1;
             String[] skills = party.getSkillList();
             if (skills.length == 0) {
-                System.out.println("\n" + party.getName() + " has no usable skills. Skipping action for this character.");
+                System.out
+                        .println("\n" + party.getName() + " has no usable skills. Skipping action for this character.");
                 continue; // skip to next character
             }
             System.out.println("\n" + party.getName() + " Skill list:");
-            for (String s : skills) System.out.println(s);
+            for (String s : skills)
+                System.out.println(s);
             System.out.println("===============================");
             while (true) {
                 System.out.print("Choose skill for " + party.getName() + " (1-" + skills.length + "): ");
@@ -157,7 +178,8 @@ public class BattlePhases extends BattleUIComponent {
                 // choose an alive ally (including self)
                 ArrayList<Integer> aliveAllyIndexes = new ArrayList<>();
                 for (int i = 0; i < characters.length; i++) {
-                    if (characters[i].isAlive()) aliveAllyIndexes.add(i);
+                    if (characters[i].isAlive())
+                        aliveAllyIndexes.add(i);
                 }
                 if (aliveAllyIndexes.isEmpty()) {
                     System.out.println("No alive allies to target. Skill canceled.");
@@ -165,7 +187,8 @@ public class BattlePhases extends BattleUIComponent {
                     System.out.println("\nChoose ally target for " + party.getName() + ":");
                     for (int i = 0; i < aliveAllyIndexes.size(); i++) {
                         Character c = characters[aliveAllyIndexes.get(i)];
-                        System.out.println((i + 1) + ". " + c.getName() + " | HP: " + c.healthPoints + " | MP: " + c.manaPoints);
+                        System.out.println(
+                                (i + 1) + ". " + c.getName() + " | HP: " + c.healthPoints + " | MP: " + c.manaPoints);
                     }
                     int chosenAllyIndex = -1;
                     while (true) {
@@ -210,7 +233,8 @@ public class BattlePhases extends BattleUIComponent {
                 party.useSkill(skill, target, party, characters);
             }
 
-            // if the target exists and died, rebuild the list of alive enemies for the chapter
+            // if the target exists and died, rebuild the list of alive enemies for the
+            // chapter
             if (target != null && !target.isAlive()) {
                 aliveEnemyIndexes.clear();
                 for (int i = 0; i < mobs.length; i++) {
@@ -218,7 +242,8 @@ public class BattlePhases extends BattleUIComponent {
                         aliveEnemyIndexes.add(i);
                     }
                 }
-                if (aliveEnemyIndexes.isEmpty()) return; // all enemies dead
+                if (aliveEnemyIndexes.isEmpty())
+                    return; // all enemies dead
             }
         }
     }

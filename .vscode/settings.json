@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false,
+    "**/.idea": false,
+    "**/*.iml": false
+  },
+  "explorer.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false,
+    "**/.idea": false,
+    "**/*.iml": false
+  },
+  "window.restoreWindows": "all"
+}

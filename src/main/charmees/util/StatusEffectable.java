@@ -1,3 +1,4 @@
+package charmees.util;
 // Interface for entities that can have status effects applied
 public interface StatusEffectable {
     boolean isStunned();
