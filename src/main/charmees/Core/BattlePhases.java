@@ -1,6 +1,11 @@
-// Class for handling battle phases (enemy and character turns)
+
+package src.main.charmees.core;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import src.main.charmees.util.*;
+import src.main.charmees.gui.*;
+import src.main.charmees.util.Character;
 
 public class BattlePhases extends BattleUIComponent {
 
