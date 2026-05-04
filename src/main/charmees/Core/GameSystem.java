@@ -1,7 +1,7 @@
 
-package src.main.charmees.core;
+package charmees.core;
 
-import src.main.charmees.gui.MainMenu;
+import charmees.gui.MainMenu;
 
 public class GameSystem {
     protected MainMenu mainMenu;
