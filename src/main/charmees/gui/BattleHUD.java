@@ -1,4 +1,7 @@
+package charmees.gui;
 
+import charmees.util.*;
+import charmees.util.Character;
 import java.util.Scanner;
 
 public class BattleHUD extends BattleUIComponent {
@@ -13,7 +16,7 @@ public class BattleHUD extends BattleUIComponent {
         System.out.println("         BATTLE STATUS");
         System.out.println("===============================");
 
-        //party stats
+        // party stats
         System.out.println("\nParty:");
         for (Character party : characters) {
             if (party.isAlive())
@@ -22,11 +25,12 @@ public class BattleHUD extends BattleUIComponent {
                 System.out.println(party.name + " | has been Defeated!!!");
         }
 
-        //mob stats
+        // mob stats
         System.out.println("\nEnemies: ");
         for (MobNPC enemies : mobs) {
             // only show enemies for the active chapter
-            if (enemies.chapter != this.currentChapter) continue;
+            if (enemies.chapter != this.currentChapter)
+                continue;
             if (enemies.isAlive())
                 System.out.println(enemies.name + " | HP: " + enemies.healthPoints);
             else

@@ -1,3 +1,4 @@
+package charmees.util;
 // Interface for entities that can be healed or have MP restored
 public interface Healable {
     void healAlly(int heal);

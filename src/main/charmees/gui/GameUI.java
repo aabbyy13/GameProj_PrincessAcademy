@@ -1,3 +1,7 @@
+package charmees.gui;
+
+import charmees.util.*;
+import charmees.util.Character;
 import java.util.Scanner;
 
 public class GameUI {
@@ -16,7 +20,7 @@ public class GameUI {
         this.battlePhases = new BattlePhases(characters, mobs, skillInput, currentChapter);
     }
 
-    public void StartGame(){
+    public void StartGame() {
         int chapter = -1;
         boolean tag2 = false;
         boolean tag3 = false;
@@ -57,7 +61,7 @@ public class GameUI {
         } else {
             System.out.println("Invalid chapter. Returning to main menu...");
         }
-        switch(chapter){
+        switch (chapter) {
             case 1:
                 battleHUD.execute();
                 StartBattle(characters, mobs);// enemies take their turn and attack alive characters
@@ -68,11 +72,11 @@ public class GameUI {
                 }
                 break;
             case 2:
-                if(tag2 == true){
+                if (tag2 == true) {
                     System.out.println("\n====================");
                     System.out.println("[Error]: You have not finished chapter 1.");
                     System.out.println("Finish chapter 1 to unlock chapter 2.\n");
-                }else{
+                } else {
                     battleHUD.execute();
                     StartBattle(characters, mobs);// enemies take their turn and attack alive characters
                     if (!isChapterEnemyAlive(chapter)) {
@@ -83,10 +87,10 @@ public class GameUI {
                 }
                 break;
             case 3:
-                if(tag3 == false){
+                if (tag3 == false) {
                     System.out.println("[Error]: You have not finished chapter 1.");
                     System.out.println("Finish chapter 2 to unlock chapter 3\n");
-                }else{
+                } else {
                     battleHUD.execute();
                     StartBattle(characters, mobs);// enemies take their turn and attack alive characters
                     if (!isChapterEnemyAlive(chapter)) {
@@ -97,10 +101,10 @@ public class GameUI {
                 }
                 break;
             case 4:
-                if(tag4 == false){
+                if (tag4 == false) {
                     System.out.println("[Error]: You have not finished chapter 1.");
                     System.out.println("Finish chapter 3 to unlock chapter 4\n");
-                }else{
+                } else {
                     battleHUD.execute();
                     StartBattle(characters, mobs);// enemies take their turn and attack alive characters
                     if (!isChapterEnemyAlive(chapter)) {
@@ -111,10 +115,10 @@ public class GameUI {
                 }
                 break;
             case 5:
-                if(tag5 == false){
+                if (tag5 == false) {
                     System.out.println("[Error]: You have not finished chapter 1.");
                     System.out.println("Finish chapter 4 to unlock chapter 5\n");
-                }else{
+                } else {
                     battleHUD.execute();
                     StartBattle(characters, mobs);// enemies take their turn and attack alive characters
                     if (!isChapterEnemyAlive(chapter)) {
@@ -125,10 +129,10 @@ public class GameUI {
                 }
                 break;
             case 6:
-                if(tag6 == false){
+                if (tag6 == false) {
                     System.out.println("[Error]: You have not finished chapter 1.");
                     System.out.println("Finish chapter 5 to unlock chapter 6\n");
-                }else{
+                } else {
                     battleHUD.execute();
                     StartBattle(characters, mobs);// enemies take their turn and attack alive characters
                     if (!isChapterEnemyAlive(chapter)) {
@@ -140,49 +144,60 @@ public class GameUI {
                 break;
         }
 
-        try{
+        try {
             System.out.println("Press Enter to return to main menu...");
             skillInput.nextLine();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println();
             System.out.println("Returning to main menu...");
         }
     }
 
-    //returns true if any enemy for the given chapter is alive
+    // returns true if any enemy for the given chapter is alive
     private boolean isChapterEnemyAlive(int chapter) {
         for (MobNPC enemy : mobs) {
-            if (enemy.chapter != chapter) continue;
-            if (enemy.isAlive()) return true;
+            if (enemy.chapter != chapter)
+                continue;
+            if (enemy.isAlive())
+                return true;
         }
         return false;
     }
-    //check if battle is ongoing
-    private boolean isBattleOngoing(){
+
+    // check if battle is ongoing
+    private boolean isBattleOngoing() {
         boolean partyAlive = false, enemiesAlive = false;
-        for (Character party : characters) if (party.isAlive()) partyAlive = true;
+        for (Character party : characters)
+            if (party.isAlive())
+                partyAlive = true;
         // only count enemies that belong to the current chapter
-        for (MobNPC enemies : mobs) if (enemies.chapter == this.currentChapter && enemies.isAlive()) enemiesAlive = true;
+        for (MobNPC enemies : mobs)
+            if (enemies.chapter == this.currentChapter && enemies.isAlive())
+                enemiesAlive = true;
         return partyAlive && enemiesAlive;
     }
 
-    //turn based battle here
-    public void StartBattle(Character[] characters, MobNPC[] mobs){
+    // turn based battle here
+    public void StartBattle(Character[] characters, MobNPC[] mobs) {
         int turnCount = 1;
         while (isBattleOngoing()) {
             System.out.println("\n========== TURN " + turnCount + " ==========");
-            // enemy phase: each alive enemy in the current chapter attacks a random alive character
+            // enemy phase: each alive enemy in the current chapter attacks a random alive
+            // character
             battlePhases.characterPhase();
-            // enemy phase: each alive enemy in the current chapter attacks a random alive character
-                battlePhases.enemyPhase();
+            // enemy phase: each alive enemy in the current chapter attacks a random alive
+            // character
+            battlePhases.enemyPhase();
             // show status after the turn
             battleHUD.execute();
             // tick status durations for characters and mobs
-            for (Character c : characters) c.tickStatus();
-            for (MobNPC m : mobs) m.tickStatus();
+            for (Character c : characters)
+                c.tickStatus();
+            for (MobNPC m : mobs)
+                m.tickStatus();
             turnCount++;
-            if (turnCount > 1000) break;
+            if (turnCount > 1000)
+                break;
         }
     }
 }
