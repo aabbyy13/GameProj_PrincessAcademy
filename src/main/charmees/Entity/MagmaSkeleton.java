@@ -1,6 +1,6 @@
-package src.main.charmees.Entity;
-import src.main.charmees.util.MobNPC;
-import src.main.charmees.util.Character;
+package charmees.Entity;
+import charmees.util.MobNPC;
+import charmees.util.Character;
 
 public class MagmaSkeleton extends MobNPC {
 
