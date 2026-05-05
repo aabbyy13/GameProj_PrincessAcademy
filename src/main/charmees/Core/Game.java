@@ -1,9 +1,9 @@
-package src.main.charmees.core;
+package charmees.core;
 
 import java.util.Scanner;
-import src.main.charmees.util.Character;
-import src.main.charmees.util.MobNPC;
-import src.main.charmees.Entity.*;
+import charmees.util.Character;
+import charmees.util.MobNPC;
+import charmees.Entity.*;
 
 public class Game {
     public static void main(String[] args) {
