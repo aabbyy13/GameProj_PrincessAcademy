@@ -5,9 +5,9 @@ import charmees.util.*;
 import charmees.util.Character;
 import java.util.ArrayList;
 import java.util.Scanner;
-import src.main.charmees.util.*;
-import src.main.charmees.gui.*;
-import src.main.charmees.util.Character;
+import charmees.util.*;
+import charmees.gui.*;
+import charmees.util.Character;
 
 public class BattlePhases extends BattleUIComponent {
 
