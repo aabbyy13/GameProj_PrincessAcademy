@@ -24,14 +24,27 @@ public class BattleDisplay {
         int[] mobMaxHP,
         int turncount)
         {
+            // clear screen
             Display.gap();
             Display.header("CHAPTER " + chapter + " - TURN " + turncount);
+            
+            // enemy field section
             Display.gap();
-            // active characters 
-            // benched
+            showEnemyField(mobs, chapter, targetIdx, mobMaxHP);
+
+            // active character section
+            Display.gap();
+            showActiveChar(characters[activeIdx], charMaxHP[activeIdx]);
+             
+            // bench section
+            Display.gap();
+            showBench(characters, activeIdx, charMaxHP);
+            
+            // thin line separator
             Display.thin();
         }
 
+        // enemy Section
         public static void showEnemyField(MobNPC[] mobs, int chapter, int targetIdx, int[] mobMaxHP){
                 System.out.println("ENEMIES: ");
                 for (int i = 0; i < mobs.length; i++){
@@ -48,12 +61,27 @@ public class BattleDisplay {
                     String target = (i == targetIdx) ? " <-- TARGET" : "";
                     System.out.println(" " + m.getName() + " [" + m.charClass + "]"
                     + " HP: " + m.healthPoints + "/" + mobMaxHP[i] + target);
-                    
-                    //
+                    System.out.println(" " + hpBar(m.healthPoints, mobMaxHP[i], 30)
+                    + " " + percent(m.healthPoints,mobMaxHP[i]) + "%");
                 }
-
-
             }
+
+            // active character Section
+            public static void showActiveChar(Character c, int maxHP){
+                System.out.println("ACTIVE CHARACTER: ");
+                Display.thin();
+                System.out.println(" " + c.getName() + " " 
+                + "   HP: " + c.healthPoints + "/" + maxHP
+                + "   MP: " + c.manaPoints + "/" + c.manaPoints);
+
+                System.out.println(" " + hpBar(c.healthPoints, maxHP, 30)
+                + " " + percent(c.healthPoints, maxHP) + "%");
+            }
+
+        // Bench Section
+        private static void showBench(Character[] characters, int activeIdx, int[] charMaxHP){
+
+        }
         // ================================================
         //HELPERS
         // ================================================
@@ -68,9 +96,9 @@ public class BattleDisplay {
             System.out.println(" " + msg);
         }
 
-        private static int precent(int hp, int max){
+        private static int percent(int hp, int max){
             if (max <= 0) return 0;
-            return (int)(double) hp / max * 100);
+            return (int)((double) hp / max * 100);
         }
 
 }
