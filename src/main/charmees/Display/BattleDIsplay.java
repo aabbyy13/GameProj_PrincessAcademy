@@ -154,6 +154,8 @@ public class BattleDisplay {
             System.out.println(" > ");
         }
 
+        // shows the switch menu to switch active character, with options to select any alive bench character,
+        //  or cancel and return to the action display
         public static void showSwitchMenu(Character[] characters, int activeIdx, int[] charMaxHP){
                 Display.gap();
                 System.out.println(" SWITCH: Tag who's in?");
@@ -176,8 +178,48 @@ public class BattleDisplay {
                 System.out.println("   > ");
         }
 
+        // shows the heal menu for lazuli's blessing, with options to select any character to heal,
+        //  or cancel and return to the action display
+        public static void showHealMenu(Character lazuli){
+            String[] skills = lazuli.getSkillList();
+            Display.gap();
+            System.out.println(" LAZULI BLESSING (MP: " + lazuli.manaPoints + ")");
+            Display.thin();
+            for (int i = 0; i < skills.length; i++){
+                System.out.println("  [" + (i + 1) + "] " + skills[i]);
+            }
+            System.out.println("  [0] Cancel");
+            Display.thin();
+            System.out.println("  > ");
+        }
+
+        // shows the enemy picker menu to select a target for an attack, with options to select any alive enemy,
+        //  or cancel and return to the action display
+        public static void showEnemyPicker(MobNPC[] mobs, int chapter, int[] mobMaxHP){
+            Display.gap();
+            System.out.println("  Choose a target:");
+            Display.thin();
+
+            int opt = 1;
+            for (int i = 0; i < mobs.length; i++) {
+                if (mobs[i].chapter != chapter || !mobs[i].isAlive()) continue;
+                System.out.println("  [" + opt + "] " + mobs[i].getName()
+                + " HP: " + mobs[i].healthPoints + "/" + mobMaxHP[i]
+                + " [" +mob[i].charClass + "]");
+                opt++;
+            }
+            Display.thin();
+            System.out.println("  > ");
+        }
+
+        // =================================================
+        // DIALOGUE -prints each line, waits for enter between them
+        // =================================================
+        // tentative not final
+
         
 
+        
 
         // ================================================
         //HELPERS
