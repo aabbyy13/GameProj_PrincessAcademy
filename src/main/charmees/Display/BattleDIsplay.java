@@ -80,8 +80,45 @@ public class BattleDisplay {
 
         // Bench Section
         private static void showBench(Character[] characters, int activeIdx, int[] charMaxHP){
+            System.out.print("   PARTY: ");
+            for(int i = 0; i < characters.length; i++){
+                Character c = characters[i];
+                String label;
 
+                if(!c.isAlive()){
+                    label = c.getName() + " [DEFEATED]";
+                } else if (i == activeIdx){
+                    label = c.getName() + " [IN BATTLE]";
+                } else if (i == 2) {
+                    label = c.getName() + "[HEAL]";
+                } else {
+                    label = c.getName() + " [BENCH] [" + percent(c.healthPoints, charMaxHP[i]) + "%]";
+                }
+
+                System.out.print(label);
+                if(i < characters.length - 1) System.out.print(" ");
+            }
+            System.out.println();
         }
+
+        // ================================================
+        // ACTION DISPLAY
+        // ================================================
+        public static void showActionDisplay(Character actor ){
+            Display.gap();
+            Display.thin();
+            System.out.println("What will " + actor.getName() + "do?");
+            Display.gap();
+
+            System.out.println("  [1] SKILL"); // skill option(skill 1 or skill 2) will be handled in BattleLogic based on the character
+            System.out.println("  [2] ULTIMATE"); // uses signature move (skill 3) will be handled in BattleLogic based on the character
+            System.out.println("  [3] SWITCH"); // switch to another character in the bench
+            System.out.println("  [4] LAZULI'S BLESSING"); // heals characters based on lazuli's skills, will be handled in BattleLogic based on the character 
+
+            Display.thin();
+            System.out.println("  > ");
+        }
+
         // ================================================
         //HELPERS
         // ================================================
