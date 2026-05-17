@@ -52,7 +52,25 @@ public class BattleDisplay {
                     //
                 }
 
-                
+
             }
+        // ================================================
+        //HELPERS
+        // ================================================
+        public static String hpBar(int hp, int max, int width){
+            if (max <= 0) return "░".repeat(width);
+            int filled = (int)((double) hp / max * width); // calculate filled portion
+            filled = Math.max(0, Math.min(width, filled)); // ensure within bounds
+            return "█".repeat(filled) + "░".repeat(width - filled); // create bar string
+        }
+
+        public static void log(String msg){
+            System.out.println(" " + msg);
+        }
+
+        private static int precent(int hp, int max){
+            if (max <= 0) return 0;
+            return (int)(double) hp / max * 100);
+        }
 
 }
