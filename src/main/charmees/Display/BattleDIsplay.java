@@ -120,6 +120,46 @@ public class BattleDisplay {
         }
 
         // ================================================
+        //SKILL MENU
+        // ================================================
+        
+        // shows the skill menu for the active character,
+        //  with options to select skill 1 or skill 2,
+        //  or cancel and return to the action display
+        public static void showSkillMenu(Character actor){
+            String[] skills = actor.getSkillList();
+            Display.gap();
+            System.out.println(" " + actor.getName() + " -- Skills:");
+            for (int i = 0; i < Math.min(2, skills.length); i++){
+                System.out.println("  [" + (i + 1) + "] " + skills[i]);
+            }
+            System.out.println("  [3] Cancel");
+            Display.thin();
+            System.out.println("  > ");
+        }
+
+        // shows the ultimate confirmation menu for the active character,
+        //  with the option to confirm using the ultimate, or cancel and return to the action
+        public static void showUltimateConfirm(Character actor) {
+            String[] skills = actor.getSkillList();
+            Display.gap();
+            System.out.println(" " + actor.getName() + " -- Ultimate:");
+            Display.thin();
+            System.out.println(" " + skills[2]);
+            Display.thin();
+            System.out.println(" Risk it all? [Y/N]");
+            System.out.println(" [1] Use it!");
+            System.out.println(" [0] Cancel");
+            Display.thin();
+            System.out.println(" > ");
+        }
+
+        public static void showSwitchMenu(Character[] characters, int activeIdx, int[] charMaxHP){
+
+        }
+
+
+        // ================================================
         //HELPERS
         // ================================================
         public static String hpBar(int hp, int max, int width){
