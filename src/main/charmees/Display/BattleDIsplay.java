@@ -217,9 +217,13 @@ public class BattleDisplay {
         //=================================================
         public static void showVictoryDisplay(int chapter){
             Display.gap();
+            pause(500);
             Display.line();
+            pause(300);
             Display.centered("L████: VICTORY!");
+            pause(300);
             Display.centered("L████: Chapter " + chapter + " Cleared!");
+            pause(500);
             if (chapter == 1){
                 Display.centered("L█z̴̧̜͈̓̈́̃́̕██: Ohhh... are you new?");
             } else if (chapter == 2){
@@ -233,8 +237,11 @@ public class BattleDisplay {
         
         public static void showDefeatDisplay(){
             Display.gap();
+            pause(500);
             Display.line();
+            pause(300);
             Display.centered("L████: DEFEAT...");
+            pause(500);
             int rng =(int)(Math.random() * 3);
                 if(rng == 0){
                     Display.centered("L████: Not quite what I expected...");
@@ -282,6 +289,14 @@ public class BattleDisplay {
         private static int percent(int hp, int max){
             if (max <= 0) return 0;
             return (int)((double) hp / max * 100);
+        }
+
+        public static void pause(int milliseconds){
+            try {
+                Thread.sleep(milliseconds);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
 }
