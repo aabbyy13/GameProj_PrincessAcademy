@@ -155,8 +155,28 @@ public class BattleDisplay {
         }
 
         public static void showSwitchMenu(Character[] characters, int activeIdx, int[] charMaxHP){
+                Display.gap();
+                System.out.println(" SWITCH: Tag who's in?");
+                Display.thin();
 
+                int opt = 1; // option number for switching, starts at 1 
+                for (int i = 0; i < characters.length; i++){
+                    if (i == 2) continue; // skips lazuli
+                    if (i == activeIdx) continue; // skip active character
+                    if(!characters[i].isAlive()) continue; // skip defeated characters
+
+                    System.out.println(" [" + opt + "] " + characters[i].getName()
+                    + "   HP: " + characters[i].healthPoints + "/" + charMaxHP[i]
+                    + "   MP: " + characters[i].manaPoints);
+                    opt++;
+                }
+
+                System.out.println("   [0]Cancel");
+                Display.thin();
+                System.out.println("   > ");
         }
+
+        
 
 
         // ================================================
