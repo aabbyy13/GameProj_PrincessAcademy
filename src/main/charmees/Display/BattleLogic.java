@@ -12,7 +12,7 @@ public class BattleLogic {
 
     private final Character[] characters; // index 2 is always Lazuli
     private final MobNPC[] mobs;
-    private final int Chapter;
+    private final int chapter;
     private final Scanner sc;
 
     private int activeIdx = 0; //current character (never index 2 / Lazuli)
@@ -30,7 +30,7 @@ public class BattleLogic {
     public BattleLogic(Character[] characters, MobNPC[] mobs, int chapter, Scanner sc) {
         this.characters = characters;
         this.mobs = mobs;
-        this.Chapter = chapter;
+        this.chapter = chapter;
         this.sc = sc;
 
         // initialize max HP arrays
@@ -44,5 +44,127 @@ public class BattleLogic {
             mobMaxHP[i] = mobs[i].healthPoints;
         }
 
+        //constructor for lazuli
+    }
+
+    // =================================================
+    // ENTRY POINT for battle logic
+    // =================================================
+
+    public void run() {
+        // lore (tentative)
+
+        //Main battle loop
+        
+    }
+
+    // =================================================
+    // PLAYER ACTIONS
+    // =================================================
+
+    
+    // =================================================
+    // TURN FLOW
+    // =================================================
+
+
+    // =================================================
+    // BATTLE STATE 
+    // =================================================
+
+
+    // =================================================
+    // TARGET PICKERS
+    // =================================================
+
+    private MobNPC pickEnemy(){
+        int aliveCount = 0;
+        // count alive enemies for the current chapter
+        for (MobNPC m : mobs)
+            if(m.chapter == this.chapter && m.isAlive()) aliveCount++;
+
+        if(aliveCount == 0) return null;
+
+        // if only 1 enemy alive, skip picker and return that enemy
+        if(aliveCount == 1){
+            for(int i = 0; i < mobs.length; i++){
+                if(mobs[i].chapter == chapter && mobs[i].isAlive()){
+                    targetIdx = i;
+                    return mobs[i];
+                }
+            }
+        }
+
+        // show enemy picker if more than 1 enemy alive
+        BattleDisplay.showEnemyPicker(mobs, chapter, mobMaxHP);
+        int pick = Display.readInt(sc);
+
+        //if player picks invalid number, return null to indicate cancelled action
+        if(pick < 1 || pick > aliveCount){
+            BattleDisplay.log("Cancelled.");
+            return null;
+        }
+
+        int count = 0;
+        //walk through enemies and return the one that corresponds
+        //  to the player's pick (skip dead enemies and enemies from other chapters)
+        for (int i = 0; i < mobs.length; i++) {
+            if(mobs[i].chapter != chapter || !mobs[i].isAlive()) continue;
+            count++;
+            if(count == pick){
+                targetIdx = i;
+                return mobs[i];
+            }
+        }
+
+        return null; // should never reach here
+    }
+
+    private Character pickAlly(){
+        // similar logic to pickEnemy but for allies
+        // exclude the active character and any dead characters
+        int aliveCount = 0;
+        for(Character c : characters)
+            if(c.isAlive()) aliveCount++;
+
+        if(aliveCount == 0) return null;
+
+        // if only 1 ally alive, skip picker and return that ally
+        if(aliveCount == 1){
+            for(Character c: characters)
+                if(c.isAlive()) return c;
+        }
+        
+        BattleDisplay.showAllyPicker(characters, charMaxHP);
+        int pick = Display.readInt(sc);
+
+        if(pick < 1 || pick > aliveCount){
+            BattleDisplay.log("Cancelled.");
+            return null;
+        }
+
+        int count = 0;
+        for(Character c : characters){
+            if(!c.isAlive()) continue;
+            count++;
+            if(count == pick) return c;
+        }
+
+        return null; // should never reach here
+    }
+
+
+    // =================================================
+    // HELPERS
+    // =================================================
+
+    // returns the index of the first alive enemy for the current chapter, 
+    // or -1 if none are alive
+    private int firstAliveEnemy() {
+        for (int i = 0; i < mobs.length; i++) {
+            if (mobs[i].chapter == this.chapter && mobs[i].isAlive()) return i;
+        }
+
+        return -1; // no alive enemies
     }
 }
