@@ -193,6 +193,26 @@ public class BattleDisplay {
             System.out.println("  > ");
         }
 
+        // shows the ally picker menu to select a target for healing, with options to select any alive character,
+        //  or cancel and return to the action display 
+        public static void showAllyPicker(Character[] characters, int[] charMaxHP){
+            Display.gap();
+            System.out.println("  Eeny.. Meeny.. Miney.. Mo:");
+            Display.thin();
+
+            int opt = 1;
+            for (int i = 0; i < characters.length; i++) {
+                if (!characters[i].isAlive()) continue;
+                System.out.println("  [" + opt + "] " + characters[i].getName()
+                + "   HP: " + characters[i].healthPoints + "/" + charMaxHP[i]
+                + "   MP:"+ characters[i].manaPoints);
+                opt++;
+                
+            }
+            Display.thin();
+            System.out.println("  > ");
+        }
+
         // shows the enemy picker menu to select a target for an attack, with options to select any alive enemy,
         //  or cancel and return to the action display
         public static void showEnemyPicker(MobNPC[] mobs, int chapter, int[] mobMaxHP){
