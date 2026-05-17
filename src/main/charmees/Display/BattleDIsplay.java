@@ -90,7 +90,7 @@ public class BattleDisplay {
                 } else if (i == activeIdx){
                     label = c.getName() + " [IN BATTLE]";
                 } else if (i == 2) {
-                    label = c.getName() + "[HEAL]";
+                    label = c.getName() + "[HEALER]";
                 } else {
                     label = c.getName() + " [BENCH] [" + percent(c.healthPoints, charMaxHP[i]) + "%]";
                 }
@@ -205,21 +205,65 @@ public class BattleDisplay {
                 if (mobs[i].chapter != chapter || !mobs[i].isAlive()) continue;
                 System.out.println("  [" + opt + "] " + mobs[i].getName()
                 + " HP: " + mobs[i].healthPoints + "/" + mobMaxHP[i]
-                + " [" +mob[i].charClass + "]");
+                + " [" +mobs[i].charClass + "]");
                 opt++;
             }
             Display.thin();
             System.out.println("  > ");
         }
 
+        //=================================================
+        // RESULTS DISPLAYS
+        //=================================================
+        public static void showVictoryDisplay(int chapter){
+            Display.gap();
+            Display.line();
+            Display.centered("L████: VICTORY!");
+            Display.centered("L████: Chapter " + chapter + " Cleared!");
+            if (chapter == 1){
+                Display.centered("L█z̴̧̜͈̓̈́̃́̕██: Ohhh... are you new?");
+            } else if (chapter == 2){
+                Display.centered("L█z̴̧̜͈̓̈́̃́̕l̵̨̨̡̗͓̲͓͂͜ͅ█: This looks fun... I wanna play with you!");
+            } else if (chapter == 3){
+                Display.centered("Ļ̶͕̝̖͚̟͇̙͇̀e̴̥̖̠̭̻̣̰͒̓́̅̓͑́͆͠z̴̧̜͈̓̈́̃́̕l̵̨̨̡̗͓̲͓͂͜ͅì̵̧̧̦̫̮̦̻̈́̈̑͑̍̚͘: huh... y̷̨̛̼̟̞͍̘͈̟̬͇̝͊̐̔̕ọ̵̻̭͈̥̅̏̾̆̑̀̐̓͆̕͠u̸͇͛̾̃̄̾̆ ̵̶̡̨̫̠̺̬̜͕̖̰͙̻̆͌̎́̈́̇̍̚̚w̷̬̓̾͋̆̐͊̿̑͌͆̕ǫ̸̡̯̜͕̮̻̖̯͚̠̻̬̎̀͂͠ņ̸̜̝͓͕̥̼̈́́̑͒̒̆͐͆̃̀̋̃͐̚?");
+            }
+            Display.thin();
+            Display.gap();
+        }
+        
+        public static void showDefeatDisplay(){
+            Display.gap();
+            Display.line();
+            Display.centered("L████: DEFEAT...");
+            int rng =(int)(Math.random() * 3);
+                if(rng == 0){
+                    Display.centered("L████: Not quite what I expected...");
+                } else if (rng == 1){
+                    Display.centered("L█z̴̧̜͈̓̈́̃́̕██: Ohh... I'm Disappointed :'<");
+                }  else if (rng == 2){
+                    Display.centered("L█z̴̧̜͈̓̈́̃́̕l̵̨̨̡̗͓̲͓͂͜ͅ█: REWIND TIME! b̴̨̛̮͚̜̝̠̭͐̄̊̊͋̿̋̚̕̕͜͝r̴̰̅r̶̹̩̝̣͇̖̰̎ŗ̵̼̫̠̈̌̿̔̉̅̈́̑͒̍̅r̸̨̥̠͉̠͓͛̚a̷̡̰̼͖̠̗̖͉̜͔͇͑̍̀̀̉̅͒͘͠͝͝͠b̷̨̢̲̟̻̣̠̫̞̫̗̟͑́̾̏̿̓̐̉̄͐͐e̶̙͈̪̣̫̺̲̓͛̇̂̕j̵̣̭͈̘̻̀͆͒́̀̓̆̊̈́̒̅d̵̢̡̧̺̟̻̠̜͋̿͒̂̓̎̀̈́͜͝q̶͙̩̞̝͙͔̫̹̳͋́͆͆̀̍̅͛́̚͜͠͝w̴̪͈̫̿̽̏́̒͛k̴̥͆̑́͑̏̽̕̕ͅē̶̼͙̈́̈́͛̌͠ͅq̵̧̪̭͕͚̮͍̜̞̜̇̿̃̽͐͋̕͜");
+                }
+            Display.thin();
+            Display.gap();
+        }
+        public static void showEnemyPhaseHeader(){
+            Display.gap();
+            Display.thin();
+            System.out.println("-- ENEMY PHASE --");
+            Display.thin();
+        }
+        public static void showPlayerPhaseHeader(Character actor){
+            Display.gap();
+            Display.thin();
+            System.out.println("  -- " + actor.getName() + "'s Turn --");
+            Display.thin();
+        }
+
+
         // =================================================
         // DIALOGUE -prints each line, waits for enter between them
         // =================================================
         // tentative not final
-
-        
-
-        
 
         // ================================================
         //HELPERS
