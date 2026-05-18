@@ -66,7 +66,33 @@ public class BattleLogic {
     // =================================================
     // TURN FLOW
     // =================================================
+    private void endPlayerTurn(){
+        // dialogue trigger tenattive
 
+        if (!isBattleOngoing()) return;
+
+        battleDisplay.showEnemyPhaseHeader();
+
+        for(MobNPC mob : mobs)
+            if(mob.chapter != chapter || !mob.isAlive()) continue;
+        
+        Character target = characters[activeIdx];
+        int skill = (int)(Math.random() * mob.getSkillCount()) + 1;
+        mob.useSkill(skill, target);
+
+        if(!Characters[activeTdx].isAlive()) {
+            for(int i =0; i < characters.length; i++){
+                if(i != 2 && characters[i].isAlive()){
+                    BattleDisplay.log(characters[activeIdx].getName() + " fell!  "
+                    + characters[i].getName() + " steps in!");
+                activeIdx = i;
+                break; 
+                }
+            }
+        }
+
+        if(!isBattleOngoing()) break;
+    }
 
     // =================================================
     // BATTLE STATE 
