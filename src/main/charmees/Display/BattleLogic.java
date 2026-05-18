@@ -1,6 +1,7 @@
 package charmees.Display;
 
 import charmees.Util.*;
+import charmees.util.MobNPC;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -110,6 +111,25 @@ public class BattleLogic {
                 anyEnemy = true;
 
         return anyFighter && anyEnemy;
+    }
+
+    private void checkBattleEnd() {
+        boolean anyFighter = false;
+        for (int i = 0; i < characters.length; i++)
+            if (i != 2 && characters[i].isAlive())
+                anyFighter = true;
+
+        boolean anyEnemy = false;
+        for (MobNPC m : mobs)
+            if (m.chapter == chapter && m.isAlive())
+                anyEnemy = true;
+
+        if (!anyEnemy) {
+            BattleDisplay.showVictory(chapter);
+            BattleDisplay.showDialogue(BattleDialogue.getPostBattleLines(chapter), sc);
+        } else if (!anyFighter) {
+            BattleDisplay.showDefeat();
+        }
     }
 
     // =================================================
